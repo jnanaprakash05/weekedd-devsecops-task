@@ -1,0 +1,1 @@
+trigger jenkins job using poll scm option
