@@ -4,7 +4,7 @@ node
   echo "check the files"
   sh "ls -a"
   sh "mkdir -p test-folder"
-  sh touch "test-folder/tset.sh"
+  sh "touch test-folder/tset.sh"
 
   stage ("2.install some packages")
   sh "sudo yum update -y"
