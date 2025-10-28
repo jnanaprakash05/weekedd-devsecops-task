@@ -1,6 +1,6 @@
 node
 {
-  stage {"checking the files"}
+  stage {"1.checking the files"}
   echo "check the files"
   sh "ls -a"
   sh "mkdir -p test-folder"
