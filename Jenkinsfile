@@ -14,7 +14,7 @@ pipeline{
                      echo "Output os is ${hy}"
                      if ("${hy}" == "${a}"){
                          echo "CORRECT OS"
-                         def sgy=sh(script:'sh /var/lib/jenkis/drt.sh ${part}',returnStdout: true).trim()
+                         def sgy=sh(script:'sh /var/lib/jenkins/drt.sh ${part}',returnStdout: true).trim()
                          echo "${sgy}"
                          if ("${sgy}" =~ "exceeeded"){
                              echo "There is disk space issue stop the build"
