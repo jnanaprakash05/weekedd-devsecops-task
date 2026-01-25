@@ -1,20 +1,53 @@
-pipeline {
+pipeline{
     agent any
-    
-    stages {
-        stage ("sample page"){
-            steps {
-                echo "this is sample declaration code"
+    environment{
+        a="Linux"
+        part="/"
+    }
+    stages{
+        stage("test"){
+            steps{
+                 sh("uname")
+                 echo "STAGE1 IS COMPLEED"
+                 script{
+                     def hy=sh(script: 'uname',returnStdout: true).trim()
+                     echo "Output os is ${hy}"
+                     if ("${hy}" == "${a}"){
+                         echo "CORRECT OS"
+                         def sgy=sh(script:'sh /tmp/drt.sh ${part}',returnStdout: true).trim()
+                         echo "${sgy}"
+                         if ("${sgy}" =~ "exceeeded"){
+                             echo "There is disk space issue stop the build"
+                             error("Build stop due todisk issue")
+                         }
+                         else{
+                             echo "No issue found continue"
+                         }
+                     }
+                     else{
+                         echo "WRONG OS"
+                         error("Build wil fail since os is not linux")
+                     }
+                 }
             }
+           
         }
-        stage ("check the packages and disk and memory"){
-            steps {
-                sh "rpm -qa | grep git"
-                echo "below is the disk and memory"
-                sh "df -h"
-                sh "du -ksh"
-                sh "free -m"
-            }
+        stage("dev"){
+            steps{
+                sh("free")
+                echo "STAGE2 is completed"
+            }   
+        }
+    }
+    post{
+        always{
+            echo "need to chek suucess or failure"
+        }
+        success{
+            echo "build is scucess since all stages completed succesfully"
+        }
+        failure{
+            echo "build is failure"
         }
     }
 }
